@@ -115,7 +115,13 @@ python3 pipeline/update.py  --source <your-id> --limit 1   # stage one and read 
 If the theme is new, create `references/<theme>.md` with an `# H1`, a `<!-- covers: ... -->`
 line and an `<!-- order: ... -->` line. `refresh_meta.py` picks it up from there.
 
-## Note on network
+## Note on network, and on exit codes
 
 `discover.py` and `update.py` are the only parts that need network access. `skill_lib.py` and
 `refresh_meta.py` are fully offline, which is why the counts can be trusted anywhere.
+
+A single unreachable source never kills a run: the error is reported and the other sources are
+still checked. But if **every** source fails, `discover.py` exits **2** rather than reporting
+zero new items, because a connectivity or selector problem must not be silently indistinguishable
+from "nothing new" - that failure mode would quietly stop the skill from ever updating again.
+The workflow inherits that exit code and fails visibly.

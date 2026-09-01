@@ -60,12 +60,13 @@ def main() -> int:
         sources = sl.sources_by_mode("watch")
 
     have = sl.included_urls()
-    report, total = [], 0
+    report, total, failed = [], 0, 0
 
     for s in sources:
         try:
             found = candidates(s)
         except Exception as exc:  # noqa: BLE001 - one broken source must not kill the run
+            failed += 1
             report.append({"id": s["id"], "error": str(exc), "new": []})
             print(f"  ! {s['id']}: {exc}", file=sys.stderr)
             continue
@@ -86,8 +87,9 @@ def main() -> int:
                        "license": s["license"], "found": len(found), "new": deduped})
 
     if args.json:
-        print(json.dumps({"total_new": total, "sources": report}, indent=2))
-        return 0
+        print(json.dumps({"total_new": total, "failed": failed,
+                          "checked": len(sources), "sources": report}, indent=2))
+        return 2 if failed == len(sources) and sources else 0
 
     print(f"Already in the skill: {len(have)} source URLs across {len(sl.theme_files())} themes\n")
     for r in report:
@@ -100,6 +102,12 @@ def main() -> int:
         for item in r["new"]:
             print(f"      {item['title'][:70] or '(no title)'}")
             print(f"      {item['url']}")
+    if failed == len(sources) and sources:
+        print(f"\nEVERY source failed ({failed}/{len(sources)}). This is a connectivity or\nselector problem, NOT an empty result - do not read it as \"nothing new\".", file=sys.stderr)
+        return 2
+    if failed:
+        print(f"\n{failed} of {len(sources)} source(s) failed; the count below covers the rest.",
+              file=sys.stderr)
     print(f"\nTOTAL NEW: {total}")
     if total:
         print("Next: python3 pipeline/update.py   (fetches + stages a distillation prompt for each)")

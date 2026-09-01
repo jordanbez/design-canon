@@ -1,0 +1,109 @@
+name: watch sources
+
+# Discovers items the skill does not cover yet, stages a ready-to-run distillation
+# prompt for each, and opens a PR carrying them. It never writes to references/ -
+# distillation and review stay with a human. See pipeline/README.md.
+
+on:
+  schedule:
+    - cron: "0 11 * * 1" # Mondays 11:00 UTC = 08:00 America/Sao_Paulo
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "which sources to check"
+        type: choice
+        default: watch
+        options: [watch, seed, all]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Discover new items
+        id: discover
+        run: |
+          MODE="${{ inputs.mode || 'watch' }}"
+          case "$MODE" in
+            seed) FLAG="--seed" ;;
+            all)  FLAG="--all" ;;
+            *)    FLAG="" ;;
+          esac
+          python pipeline/discover.py $FLAG --json > /tmp/new.json
+          TOTAL=$(python -c "import json;print(json.load(open('/tmp/new.json'))['total_new'])")
+          echo "total=$TOTAL" >> "$GITHUB_OUTPUT"
+          echo "mode=$MODE" >> "$GITHUB_OUTPUT"
+          echo "Found $TOTAL new item(s)."
+
+      - name: Stage distillation prompts
+        if: steps.discover.outputs.total != '0'
+        run: python pipeline/update.py --from /tmp/new.json
+
+      - name: Open a pull request with the staged prompts
+        if: steps.discover.outputs.total != '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          DATE=$(date -u +%F)
+          BRANCH="watch/$DATE"
+          TOTAL="${{ steps.discover.outputs.total }}"
+
+          git config user.name  "design-canon watcher"
+          git config user.email "actions@github.com"
+          git checkout -B "$BRANCH"
+          git add -f pipeline/staging
+          git commit -m "watch: stage $TOTAL new item(s) for distillation ($DATE)"
+          git push -f origin "$BRANCH"
+
+          {
+            echo "The watcher found **$TOTAL** item(s) not yet distilled into the skill."
+            echo
+            echo "### What to do"
+            echo
+            echo '1. `git fetch && git checkout '"$BRANCH"'`'
+            echo '2. In Claude Code, from the repo root:'
+            echo
+            echo '   > Read every file in `pipeline/staging/prompts/`, produce the finished entry for'
+            echo '   > each following the spec exactly, tell me which `references/<theme>.md` it belongs'
+            echo '   > in, and wait for my OK before writing anything.'
+            echo
+            echo '3. Paste the approved entries into the right `references/<theme>.md`, respecting that'
+            echo '   file'"'"'s declared `<!-- order: -->`.'
+            echo '4. `python3 pipeline/refresh_meta.py --updated '"$DATE"'`'
+            echo '5. Add a `CHANGELOG.md` line, delete `pipeline/staging/`, and merge.'
+            echo
+            echo "### What was found"
+            echo
+            echo '```'
+            python -c "
+import json
+r = json.load(open('/tmp/new.json'))
+for s in r['sources']:
+    if s.get('error'):
+        print(f\"! {s['id']}: {s['error']}\"); continue
+    for i in s['new']:
+        print(f\"[{i['license']}] {i['name']} -> references/{i['theme']}.md\")
+        print(f\"    {i['title'][:80]}\")
+        print(f\"    {i['url']}\")
+"
+            echo '```'
+          } > /tmp/body.md
+
+          gh pr create --base "${{ github.ref_name }}" --head "$BRANCH" \
+            --title "watch: $TOTAL new item(s) to distill ($DATE)" \
+            --body-file /tmp/body.md || \
+          gh pr edit "$BRANCH" --title "watch: $TOTAL new item(s) to distill ($DATE)" --body-file /tmp/body.md
+
+      - name: Nothing new
+        if: steps.discover.outputs.total == '0'
+        run: echo "The skill already covers every discoverable item. No PR opened."

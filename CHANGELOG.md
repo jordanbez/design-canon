@@ -28,6 +28,14 @@ No entries added. Pipeline and metadata corrections only.
   image's `alt` text and finds all six.
 - **Added** `.gitattributes` pinning the repo to LF. `pipeline/sources.json` had been committed
   as CRLF, turning a three-line change into a 157-line diff.
+- **Fixed the extractor reporting "no date on page" for pages that carry one.** The Humane by
+  Design garden prints its dates as text inside a `<timestamp>` element, and the parser only
+  read `<time datetime>` and meta tags, in ISO only. Every garden item was staged with a prompt
+  telling the distiller to omit a date that was right there. Since `humane-design.md` orders
+  newest-first and entries are immutable once written, this had to be fixed before distilling,
+  not after. `parse_date` now also reads written dates such as "Feb 19, 2024".
+- **Bumped** `actions/checkout` and `actions/setup-python` to v7. Both were on majors pinned to
+  Node 20 and already being force-migrated to Node 24 by the runner.
 - **Fixed the watch workflow, which had never been able to run.** The Python block embedded in
   the pull-request step sat at column 0, which ends a YAML block scalar, so the file was
   invalid. GitHub reports that by failing a run on every push - three emailed failures before

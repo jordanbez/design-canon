@@ -30,6 +30,27 @@ BLOCKS = {"p", "div", "section", "article", "main", "ul", "ol", "table", "tr",
 DATE_META = ("article:published_time", "datePublished", "publish_date", "date",
              "og:published_time", "article:modified_time")
 DATE_RE = re.compile(r"(\d{4})-(\d{2})-(\d{2})")
+TEXT_DATE_RE = re.compile(
+    r"(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\.?\s+(\d{1,2}),?\s+(\d{4})", re.I)
+MONTHS = {m: i for i, m in enumerate(
+    "jan feb mar apr may jun jul aug sep oct nov dec".split(), 1)}
+
+
+def parse_date(text: str) -> str | None:
+    """ISO first, then a written date like 'Feb 19, 2024'. Returns YYYY-MM-DD or None.
+
+    Not every site marks its dates up as ISO: the Humane by Design garden prints
+    them as text inside a <timestamp> element, and a page whose date is missed is
+    worse than one with no date at all, because the staged prompt then tells the
+    distiller there was none.
+    """
+    m = DATE_RE.search(text)
+    if m:
+        return m.group(0)
+    m = TEXT_DATE_RE.search(text)
+    if m:
+        return f"{m.group(3)}-{MONTHS[m.group(1)[:3].lower()]:02d}-{int(m.group(2)):02d}"
+    return None
 
 
 def fetch(url: str, timeout: int = 30, retries: int = 3) -> str:
@@ -77,6 +98,7 @@ class _Reader(HTMLParser):
         self._drop_depth = 0
         self._out: list[str] = []
         self._in_title = False
+        self._in_datetext = False
         self._href: str | None = None
         self._link_buf: list[str] = []
         self._list_stack: list[str] = []
@@ -106,13 +128,15 @@ class _Reader(HTMLParser):
             if key in ("description", "og:description") and not self.page.description:
                 self.page.description = content
             if key in DATE_META and not self.page.published:
-                m = DATE_RE.search(content)
-                if m:
-                    self.page.published = m.group(0)
-        elif tag == "time":
-            m = DATE_RE.search(a.get("datetime", ""))
-            if m and not self.page.published:
-                self.page.published = m.group(0)
+                self.page.published = parse_date(content) or ""
+        elif tag in ("time", "timestamp"):
+            if not self.page.published:
+                found = parse_date(a.get("datetime", ""))
+                if found:
+                    self.page.published = found
+                else:
+                    # no usable attribute - the date may be the element's own text
+                    self._in_datetext = True
         elif tag in HEADINGS:
             self._newline(2)
             self._emit(HEADINGS[tag] + " ")
@@ -158,6 +182,8 @@ class _Reader(HTMLParser):
             return
         if tag == "title":
             self._in_title = False
+        elif tag in ("time", "timestamp"):
+            self._in_datetext = False
         elif tag in HEADINGS or tag in BLOCKS:
             if tag == "pre":
                 self._in_pre = False
@@ -184,6 +210,8 @@ class _Reader(HTMLParser):
         if self._in_title:
             self.page.title += data.strip()
             return
+        if self._in_datetext and not self.page.published:
+            self.page.published = parse_date(data) or ""
         if self._in_pre:
             self._emit(data)
             return

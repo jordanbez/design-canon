@@ -22,6 +22,16 @@ No entries added. Pipeline and metadata corrections only.
 - **Corrected** the `humane-by-design-principles` note, which listed eight principles including
   two that do not exist (`reciprocal`, `thoughtful`) and omitted `transparent`. The site
   publishes seven, and all seven are distilled.
+- **Fixed** the extractor dropping any link whose only content is an image. The Humane by
+  Design garden is built from cover-image cards, so it reported 0 items indefinitely - an
+  index that is broken and an index that is empty looked identical. It now falls back to the
+  image's `alt` text and finds all six.
+- **Added** `.gitattributes` pinning the repo to LF. `pipeline/sources.json` had been committed
+  as CRLF, turning a three-line change into a 157-line diff.
+- `SKILL.md` names the four recurring tensions between this canon and a commercial growth
+  playbook (engagement against finitude, scarcity, defaults, friction with opposite
+  beneficiaries), and instructs the agent to surface the trade-off rather than pick a side.
+  Written for any companion library rather than a named one, since none is assumed installed.
 
 ## 2026-09-01
 
@@ -37,6 +47,3 @@ Initial release. 49 principles across 3 themes.
 - Pipeline: declarative source registry, offline delta detection, stdlib-only fetch and
   extract, staged distillation prompts, metadata sync.
 - Weekly watch workflow over Humane by Design and principles.design.
-- `SKILL.md` names the four real tensions between this canon and a commercial growth
-  playbook (engagement against finitude, scarcity, defaults, friction with opposite
-  beneficiaries), and instructs the agent to surface the trade-off rather than pick a side.

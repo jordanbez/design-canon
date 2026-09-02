@@ -134,6 +134,11 @@ class _Reader(HTMLParser):
             if href and not href.startswith(("#", "javascript:", "mailto:")):
                 self._href = urljoin(self.base, href)
                 self._link_buf = []
+        elif tag == "img" and self._href is not None and not "".join(self._link_buf).strip():
+            # A card that wraps only a cover image has no link text, so it ends with an
+            # empty label and is dropped below - which makes an entire index look empty
+            # rather than broken. The alt text is the label in that case.
+            self._emit((a.get("alt") or "").strip())
         elif tag in ("strong", "b"):
             self._emit("**")
         elif tag in ("em", "i"):

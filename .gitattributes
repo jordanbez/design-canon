@@ -1,0 +1,5 @@
+# Everything in this repo is text and is stored with LF.
+# Without this, a write from a Windows editor rewrites a whole file as CRLF and the
+# real change disappears into a diff that touches every line. pipeline/sources.json
+# was committed that way once (ab5aee9); this is what stops it recurring.
+* text=auto eol=lf

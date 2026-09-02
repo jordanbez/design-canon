@@ -33,7 +33,10 @@ No entries added. Pipeline and metadata corrections only.
   read `<time datetime>` and meta tags, in ISO only. Every garden item was staged with a prompt
   telling the distiller to omit a date that was right there. Since `humane-design.md` orders
   newest-first and entries are immutable once written, this had to be fixed before distilling,
-  not after. `parse_date` now also reads written dates such as "Feb 19, 2024".
+  not after. `parse_date` now reads written dates in both orders - "Feb 19, 2024" and
+  "6 March 2026", the latter being how principles.design writes its bylines, in a bare div
+  with no `<time>` element at all - and falls back to the top of the page body when the
+  markup exposes no date. `python3 pipeline/extract.py --selfcheck` covers the formats.
 - **Bumped** `actions/checkout` and `actions/setup-python` to v7. Both were on majors pinned to
   Node 20 and already being force-migrated to Node 24 by the runner.
 - **Fixed the watch workflow, which had never been able to run.** The Python block embedded in

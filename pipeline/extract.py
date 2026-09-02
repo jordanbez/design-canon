@@ -32,8 +32,15 @@ DATE_META = ("article:published_time", "datePublished", "publish_date", "date",
 DATE_RE = re.compile(r"(\d{4})-(\d{2})-(\d{2})")
 TEXT_DATE_RE = re.compile(
     r"(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\.?\s+(\d{1,2}),?\s+(\d{4})", re.I)
+DMY_DATE_RE = re.compile(
+    r"(?<!\d)(\d{1,2})\s+(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\.?,?\s+(\d{4})", re.I)
 MONTHS = {m: i for i, m in enumerate(
     "jan feb mar apr may jun jul aug sep oct nov dec".split(), 1)}
+# How far into the body to look for a byline date when the markup carries none.
+# ponytail: a fixed window, not real byline detection. A date this early is almost
+# always the byline; if a source ever opens its prose with one, the staged prompt
+# shows the date and the human review catches it before an entry is written.
+BYLINE_WINDOW = 1200
 
 
 def parse_date(text: str) -> str | None:
@@ -50,6 +57,9 @@ def parse_date(text: str) -> str | None:
     m = TEXT_DATE_RE.search(text)
     if m:
         return f"{m.group(3)}-{MONTHS[m.group(1)[:3].lower()]:02d}-{int(m.group(2)):02d}"
+    m = DMY_DATE_RE.search(text)          # "6 March 2026", as principles.design writes it
+    if m:
+        return f"{m.group(3)}-{MONTHS[m.group(2)[:3].lower()]:02d}-{int(m.group(1)):02d}"
     return None
 
 
@@ -224,6 +234,10 @@ class _Reader(HTMLParser):
         body = re.sub(r"[ \t]+", " ", body)
         body = re.sub(r" *\n *", "\n", body)
         body = re.sub(r"\n{3,}", "\n\n", body).strip()
+        if not self.page.published:
+            # Neither <time> nor a meta tag: principles.design prints the date as a bare
+            # div in the byline. Bounded to the top of the page, see BYLINE_WINDOW.
+            self.page.published = parse_date(body[:BYLINE_WINDOW]) or ""
         self.page.text = body
         self.page.title = re.sub(r"\s+", " ", self.page.title).strip()
         return self.page
@@ -281,8 +295,27 @@ def feed_items(url: str) -> list[tuple[str, str]]:
     return out
 
 
+def _selfcheck() -> None:
+    """Offline check of the date formats the watched sources actually publish."""
+    cases = {
+        "2024-01-23": "2024-01-23",                 # ISO, in a meta tag
+        "Planted: Feb 19, 2024": "2024-02-19",      # Humane by Design garden
+        "6 March 2026": "2026-03-06",               # principles.design byline
+        "11 March 2026": "2026-03-11",
+        "Paul Fitts, 1954": None,                   # a year alone is not a date
+        "Kurosu and Kashimura (1995)": None,
+    }
+    for text, expected in cases.items():
+        got = parse_date(text)
+        assert got == expected, f"parse_date({text!r}) = {got!r}, expected {expected!r}"
+    print(f"parse_date: {len(cases)} cases OK")
+
+
 if __name__ == "__main__":
     import sys
+    if len(sys.argv) < 2 or sys.argv[1] == "--selfcheck":
+        _selfcheck()
+        raise SystemExit(0)
     p = read(sys.argv[1])
     print(f"# {p.title}\n<{p.url}>  published={p.published or '-'}\n")
     print(p.text[:3000])

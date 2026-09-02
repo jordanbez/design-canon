@@ -77,7 +77,7 @@ jobs:
             echo '   > each following the spec exactly, tell me which `skills/design-canon/references/<theme>.md` it belongs'
             echo '   > in, and wait for my OK before writing anything.'
             echo
-            echo '3. Paste the approved entries into the right `skills/design-canon/references/<theme>.md`, respecting'
+            echo '3. Paste the approved entries into the right `skills/design-canon/references/<theme>.md`, respecting that'
             echo '   file'"'"'s declared `<!-- order: -->`.'
             echo '4. `python3 pipeline/refresh_meta.py --updated '"$DATE"'`'
             echo '5. Add a `CHANGELOG.md` line, delete `pipeline/staging/`, and merge.'

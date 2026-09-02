@@ -45,7 +45,7 @@
 **Source.** [Humane by Design - Finite](https://humanebydesign.com/principles/finite/)
 
 ## Design for disability first, then watch everyone benefit
-**Principle.** Inclusive design draws on the full range of human diversity rather than accommodating it afterwards. Solutions built for people with disabilities routinely turn out better for everyone.
+**Principle.** Inclusive design starts from the whole spread of human ability rather than accommodating it afterwards. Solutions built for people with disabilities routinely turn out better for everyone.
 **Apply when.** Any decision touching contrast, type size, motion, input method, or the platform's own accessibility settings.
 **The move.** Start from the constraint rather than retrofitting to it: build teams with varied perspectives, design for disability first, and respect the platform features people already rely on, including zoom, contrast and font sizing. Give control over intrusive effects such as animation and infinite scroll instead of overriding the user's settings.
 **Anti-pattern.** Disabling platform zoom or contrast in order to protect a layout.

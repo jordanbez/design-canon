@@ -165,7 +165,7 @@
 **Source.** [Laws of UX - Peak-End Rule](https://lawsofux.com/peak-end-rule/)
 
 ## Accept whatever the user gives you, emit something strict
-**Principle.** Be liberal in what you accept and conservative in what you send. Resilience comes from anticipating the range of what real people will do, then normalising it internally rather than rejecting it.
+**Principle.** Postel's robustness principle, stated in RFC 761 (1980): be liberal in what you accept and conservative in what you send. Resilience comes from anticipating the range of what real people will do, then normalising it internally rather than rejecting it.
 **Apply when.** Every input: phone numbers, dates, card numbers, addresses, search queries, pasted text, uploads.
 **The move.** Apply Postel's law: accept variant input, translate it into the required form yourself, and show what you did. Strip the spaces out of the card number rather than erroring on them. Set boundaries where they genuinely exist and give clear feedback at those edges, but never make a user perform formatting that a parser can do.
 **Anti-pattern.** A validation message rejecting input the system could have interpreted unambiguously.
@@ -178,7 +178,7 @@
 **Source.** [Laws of UX - Selective Attention](https://lawsofux.com/selective-attention/)
 
 ## Put what matters at the ends of the list
-**Principle.** The first and last items in a series are recalled best, and the middle is where things go to be forgotten. Position in a sequence is a memory decision, not a layout one.
+**Principle.** What sits at the start and at the end of a series is recalled best; the middle is where things go to be forgotten. Position in a sequence is a memory decision, not a layout one.
 **Apply when.** Navigation, toolbars, menus, feature lists, onboarding sequences, form field order.
 **The move.** Apply the serial position effect: place the primary and most-used actions at the far left and far right of a navigation set, and park the least important items in the middle where lower recall costs nothing. In any ordered sequence, spend the first and last slots deliberately.
 **Evidence.** Described by Hermann Ebbinghaus through the primacy and recency effects.

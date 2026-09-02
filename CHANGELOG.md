@@ -28,6 +28,10 @@ No entries added. Pipeline and metadata corrections only.
   image's `alt` text and finds all six.
 - **Added** `.gitattributes` pinning the repo to LF. `pipeline/sources.json` had been committed
   as CRLF, turning a three-line change into a 157-line diff.
+- **Reviewed** all 49 entries for verbatim reuse by n-gram overlap against the fetched source
+  pages, at a threshold of eight consecutive words. Four matched: two were reworded, one was
+  a run of researchers' names, and the fourth is Postel's own sentence from RFC 761, now
+  attributed to it rather than left reading as the site's prose.
 - `SKILL.md` names the four recurring tensions between this canon and a commercial growth
   playbook (engagement against finitude, scarcity, defaults, friction with opposite
   beneficiaries), and instructs the agent to surface the trade-off rather than pick a side.

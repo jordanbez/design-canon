@@ -4,6 +4,25 @@ All notable changes to the design-canon skill. Entries are additive by default: 
 source item becomes a new entry, and existing entries are immutable, each pinned to its
 own source.
 
+## 2026-09-02
+
+No entries added. Pipeline and metadata corrections only.
+
+- **Fixed** the `laws-of-ux` discovery pattern. It enumerated law-name suffixes, so it never
+  matched `flow`, `chunking`, `peak-end-rule`, `paradox-of-the-active-user` or
+  `law-of-pragnanz` - five of the thirty already in the skill. It now excludes site chrome
+  instead, and reports 30 found / 0 new against the live index.
+- **Fixed** the `principles-design-articles` pattern, which was returning `/articles/archive/`
+  and `/articles/feed.xml` as if they were articles.
+- **Added** `skill_lib.undiscoverable_entries()` and an assertion in `skill_lib.py`: every
+  distilled URL must still be reachable by its own source's pattern. A pattern that is too
+  tight fails silently as "nothing new", and the corpus is the only thing that can detect it.
+- **Fixed** a `UnicodeEncodeError` that aborted `discover.py` on a Windows console whenever a
+  candidate title carried a non-cp1252 character.
+- **Corrected** the `humane-by-design-principles` note, which listed eight principles including
+  two that do not exist (`reciprocal`, `thoughtful`) and omitted `transparent`. The site
+  publishes seven, and all seven are distilled.
+
 ## 2026-09-01
 
 Initial release. 49 principles across 3 themes.

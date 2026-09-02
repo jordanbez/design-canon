@@ -17,10 +17,13 @@ each. Distillation and review stay with a human.
 ## Layout
 
 ```
-SKILL.md              the agent entry point. Frontmatter + the routing table.
-references/*.md       the content. One file per theme. Each declares its own
+skills/design-canon/  THE ONLY THING THAT SHIPS. `npx skills add` installs this
+                      directory and nothing else in the repo.
+  SKILL.md            the agent entry point. Frontmatter + the routing table.
+  references/*.md     the content. One file per theme. Each declares its own
                       ordering and coverage in its header.
-assets/               informational images. GREEN-tier sources only.
+  assets/             informational images. GREEN-tier sources only.
+  LICENSE             travels with the skill so attribution reaches the installer.
 pipeline/             maintainer tooling. NOT part of the installed skill.
   sources.json        declarative registry: every source, its mode and license tier
   skill_lib.py        parses references/ - counts, coverage, what is already covered

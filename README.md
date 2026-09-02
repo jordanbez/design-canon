@@ -1,13 +1,11 @@
 # Design Canon - an Agent Skill
 
 <!-- meta:badges -->
-
 ![Agent Skill](https://img.shields.io/badge/Agent-Skill-5b4ee6)
 ![Principles](https://img.shields.io/badge/principles-49-2ea44f)
 ![Themes](https://img.shields.io/badge/themes-3-2ea44f)
 ![Sources](https://img.shields.io/badge/sources-3-2ea44f)
-![Updated](https://img.shields.io/badge/updated-2026--09--01-e67e22)
-
+![Updated](https://img.shields.io/badge/updated-2026--09--02-e67e22)
 <!-- /meta:badges -->
 
 > The public canon of interaction design - laws, usability heuristics and humane-design
@@ -41,34 +39,31 @@ The skill loads only the theme relevant to your question, so a question about fo
 never pulls in the notification guidance.
 
 <!-- meta:themes -->
-
-| Theme                                                      | Entries | Covers                                                                                                                                         |
-| ---------------------------------------------------------- | ------: | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| [UX Laws](references/ux-laws.md)                           |      30 | cognitive laws of attention, memory, decision time and perception - Fitts, Hick, Miller, Jakob, Gestalt grouping, Doherty, Zeigarnik, peak-end |
-| [Usability Heuristics](references/usability-heuristics.md) |      10 | Nielsen's 10 heuristics and heuristic evaluation - system status, error prevention, recognition over recall, user control                      |
-| [Humane Design](references/humane-design.md)               |       9 | ethical and humane product design - attention, wellbeing, agency, dark patterns, inclusive and finite design                                   |
-
+| Theme | Entries | Covers |
+| --- | ---: | --- |
+| [UX Laws](skills/design-canon/references/ux-laws.md) | 30 | cognitive laws of attention, memory, decision time and perception - Fitts, Hick, Miller, Jakob, Gestalt grouping, Doherty, Zeigarnik, peak-end |
+| [Usability Heuristics](skills/design-canon/references/usability-heuristics.md) | 10 | Nielsen's 10 heuristics and heuristic evaluation - system status, error prevention, recognition over recall, user control |
+| [Humane Design](skills/design-canon/references/humane-design.md) | 9 | ethical and humane product design - attention, wellbeing, agency, dark patterns, inclusive and finite design |
 <!-- /meta:themes -->
 
 Every entry uses one fixed shape - **Principle**, **Apply when**, **The move**, plus
 **Evidence** and **Anti-pattern** where the source supports them, and always a **Source**
 link - so an agent gets the named lever, the concrete action, and the proof.
 
-The agent entry point is [`SKILL.md`](SKILL.md).
+The agent entry point is [`SKILL.md`](skills/design-canon/SKILL.md). Only
+[`skills/design-canon/`](skills/design-canon/) is installed - the pipeline below stays in this
+repository and never lands in your skills directory.
 
 ## Sources
 
 <!-- meta:sources -->
-
 - **Laws of UX** - 30 entries
 - **Nielsen Norman Group** - 10 entries
 - **Humane by Design** - 9 entries
 <!-- /meta:sources -->
 
 <!-- meta:coverage -->
-
 Distilled entries span **2023-01-09 to 2024-01-23** where the source is dated; undated canonical references carry no date.
-
 <!-- /meta:coverage -->
 
 | Source                                                                             | Author        | Tier  | Treatment                            |

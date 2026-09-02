@@ -28,6 +28,13 @@ No entries added. Pipeline and metadata corrections only.
   image's `alt` text and finds all six.
 - **Added** `.gitattributes` pinning the repo to LF. `pipeline/sources.json` had been committed
   as CRLF, turning a three-line change into a 157-line diff.
+- **Separated the skill from the tooling.** `npx skills add` was copying the whole repository
+  into every installer's skills directory: 75 KB of maintainer tooling alongside 56 KB of
+  actual skill, including `pipeline/prompts/distill.md`, a prompt spec written in the second
+  person that an agent scanning the directory could read as instructions to itself. The skill
+  now lives in `skills/design-canon/`, which the CLI resolves on its own, so the install
+  command is unchanged and the pipeline stays maintainer-side. `LICENSE` is copied in beside
+  it so attribution travels with the installed artefact.
 - **Reviewed** all 49 entries for verbatim reuse by n-gram overlap against the fetched source
   pages, at a threshold of eight consecutive words. Four matched: two were reworded, one was
   a run of researchers' names, and the fourth is Postel's own sentence from RFC 761, now

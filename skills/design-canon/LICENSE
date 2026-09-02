@@ -1,0 +1,52 @@
+design-canon is licensed in two parts.
+
+--------------------------------------------------------------------------------
+1. THE PIPELINE  (pipeline/, .github/)  -  MIT License
+--------------------------------------------------------------------------------
+
+Copyright (c) 2026 Jordan Bez
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+--------------------------------------------------------------------------------
+2. THE DISTILLED CONTENT  (SKILL.md, references/, assets/)
+   Creative Commons Attribution 4.0 International (CC BY 4.0)
+--------------------------------------------------------------------------------
+
+The entries in references/ are original summaries written for this project. They
+are licensed CC BY 4.0: you may share and adapt them, including commercially,
+provided you give appropriate credit.
+
+    https://creativecommons.org/licenses/by/4.0/
+
+--------------------------------------------------------------------------------
+3. UPSTREAM RIGHTS  -  read this before reusing anything
+--------------------------------------------------------------------------------
+
+The IDEAS distilled here are not this project's to license. Each law, heuristic
+and principle belongs to the researcher or author who formulated it, and each
+entry links back to the page it was distilled from.
+
+This project reproduces no source prose verbatim and mirrors no images from
+sources whose material is all-rights-reserved. Where a source's own terms are
+more restrictive than CC BY 4.0, those terms govern that material, not this
+license. Sources whose published research is the product they sell are excluded
+from the corpus entirely; see the roadmap in README.md.
+
+If you are the author of a source indexed here and want an entry changed or
+removed, open an issue and it will be removed.

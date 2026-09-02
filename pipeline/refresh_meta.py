@@ -52,10 +52,14 @@ def theme_meta() -> list[dict]:
     return sorted(out, key=lambda d: -d["count"])
 
 
+# README.md sits at the repo root; the skill it documents lives one level down.
+README_PREFIX = "skills/design-canon/"
+
+
 def render_readme_table(themes: list[dict]) -> str:
     rows = ["| Theme | Entries | Covers |", "| --- | ---: | --- |"]
     for t in themes:
-        rows.append(f"| [{t['title']}](references/{t['slug']}.md) | {t['count']} | {t['covers']} |")
+        rows.append(f"| [{t['title']}]({README_PREFIX}references/{t['slug']}.md) | {t['count']} | {t['covers']} |")
     return "\n".join(rows)
 
 
@@ -110,7 +114,7 @@ def main() -> int:
             ("sources", render_sources(srcs)),
             ("count", str(len(entries))),
         ],
-        sl.ROOT / "SKILL.md": [
+        sl.SKILL_DIR / "SKILL.md": [
             ("routing", render_routing_table(themes)),
             ("count", str(len(entries))),
         ],

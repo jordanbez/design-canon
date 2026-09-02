@@ -27,8 +27,11 @@ from typing import Iterator
 from urllib.parse import unquote, urlsplit, urlunsplit
 
 ROOT = Path(__file__).resolve().parent.parent
-REFERENCES = ROOT / "references"
-ASSETS = ROOT / "assets"
+# Only SKILL_DIR ships to an installing agent. Everything else here is maintainer
+# tooling and must stay out of it - see AGENT.md.
+SKILL_DIR = ROOT / "skills" / "design-canon"
+REFERENCES = SKILL_DIR / "references"
+ASSETS = SKILL_DIR / "assets"
 PIPELINE = ROOT / "pipeline"
 STAGING = PIPELINE / "staging"
 SOURCES_FILE = PIPELINE / "sources.json"

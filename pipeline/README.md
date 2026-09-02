@@ -1,8 +1,9 @@
 # pipeline/ - keeping design-canon current
 
 This folder is the machinery that builds the skill and keeps it in step with its sources.
-It is **not part of the installed skill**: `npx skills add` and the agent only ever read
-`SKILL.md`, `references/` and `assets/` at the repo root. Everything here is maintainer tooling.
+It is **not part of the installed skill**: `npx skills add` resolves the skill directory
+inside this repo, so an installing agent only ever receives `skills/design-canon/`. Everything
+here stays maintainer-side - you run it, and installers get the result with `npx skills update`.
 
 Stdlib-only Python 3.10+. There is nothing to `pip install`.
 

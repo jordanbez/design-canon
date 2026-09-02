@@ -1,6 +1,19 @@
+# Operator tooling. Private, never published with the skill.
+RUNBOOK.local.md
+*.local.md
+.claude/agents/
+
+# Pipeline working area
 pipeline/staging/
+
+# Python
 pipeline/__pycache__/
 __pycache__/
 *.pyc
+
+# Env and OS
 .env
 .DS_Store
+
+# Stale git locks moved aside on sandboxed mounts that cannot delete files
+.git/_stale/

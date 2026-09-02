@@ -18,3 +18,6 @@ Initial release. 49 principles across 3 themes.
 - Pipeline: declarative source registry, offline delta detection, stdlib-only fetch and
   extract, staged distillation prompts, metadata sync.
 - Weekly watch workflow over Humane by Design and principles.design.
+- `SKILL.md` names the four real tensions between this canon and a commercial growth
+  playbook (engagement against finitude, scarcity, defaults, friction with opposite
+  beneficiaries), and instructs the agent to surface the trade-off rather than pick a side.

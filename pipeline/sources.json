@@ -43,7 +43,7 @@
       "index": "https://humanebydesign.com/principles/",
       "discovery": "html-index",
       "item_pattern": "^/principles/[^/]+/?$",
-      "notes": "The eight humane principles: empowering, finite, inclusive, intentional, reciprocal, resilient, respectful, thoughtful."
+      "notes": "The seven humane principles: empowering, finite, inclusive, intentional, resilient, respectful, transparent."
     },
     {
       "id": "humane-by-design-garden",
@@ -66,8 +66,8 @@
       "theme": "writing-design-principles",
       "index": "https://principles.design/articles/",
       "discovery": "html-index",
-      "item_pattern": "^/articles/[^/]+/?$",
-      "notes": "Primary watch target. Essays on writing, using and evolving design principles."
+      "item_pattern": "^/articles/(?!archive/?$|feed\\.xml$)[^/]+/?$",
+      "notes": "Primary watch target. Essays on writing, using and evolving design principles. The lookahead drops the site's own /articles/archive/ and /articles/feed.xml, which are index pages, not items."
     },
     {
       "id": "principles-design-examples",
@@ -90,8 +90,8 @@
       "theme": "ux-laws",
       "index": "https://lawsofux.com/",
       "discovery": "html-index",
-      "item_pattern": "^/[a-z0-9%-]+-(law|effect|principle|threshold|razor|overload|bias|load|memory|region|proximity|similarity|connectedness|model|attention|flow|chunking)s?/?$",
-      "notes": "30 laws. The underlying laws are public canon (Fitts, Hick, Miller, Gestalt); the site prose is Jon Yablonski's, so distill, never copy."
+      "item_pattern": "^/(?!articles|about|resources|posters|book|search|store|newsletter)[^/]{3,}/?$",
+      "notes": "30 laws. The underlying laws are public canon (Fitts, Hick, Miller, Gestalt); the site prose is Jon Yablonski's, so distill, never copy. The pattern excludes the site's own chrome rather than enumerating law-name suffixes: an allowlist of suffixes silently missed flow, chunking, peak-end-rule, paradox-of-the-active-user and law-of-pragnanz."
     },
     {
       "id": "nng-ten-heuristics",

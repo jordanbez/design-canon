@@ -6,7 +6,7 @@
 > Guidance for designing products that respect people's attention, agency and wellbeing.
 > Distilled from [Humane by Design](https://humanebydesign.com/) by Jon Yablonski.
 > Dated essays sit at the top, newest first; the seven undated principles follow in the
-> source's own order. This is one of the two watched sources, so new material lands here.
+> source's own order. This is one of the two watched sites, so new material lands here.
 
 ## Give the user the controls to the algorithm shaping their feed
 **Principle.** Personalisation trades decision fatigue for agency. The same recommendation loop that removes the work of choosing also removes the ability to choose differently, and the loop is tuned for engagement rather than for the person's interest.

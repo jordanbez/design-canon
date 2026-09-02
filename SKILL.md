@@ -68,6 +68,42 @@ Every entry follows the same shape, so you can skim for the part you need:
 concrete action, carrying the named mechanism) - **Evidence** and **Anti-pattern** where the
 source supports them - **Source** (the link back).
 
+## When this canon meets a growth playbook
+
+You will often be carrying this skill alongside a conversion or growth playbook. They compose
+rather than compete: this skill names the mechanism and the constraint, a growth playbook says
+what to do with that mechanism commercially. Most apparent overlap between them is that
+layering, not duplication, and you should use both.
+
+Four tensions are genuine. In each one both positions are defensible, and which wins depends
+on what is being optimised and who carries the cost. **Name the tension out loud and let the
+person decide.** Resolving it silently in either direction is the failure mode here.
+
+**Engagement against finitude.** Growth playbooks prescribe building dependency through
+variable rewards, streaks and accumulated switching cost. This canon holds that a product is
+measured by the capability it adds rather than the attention it extracts, and that an
+experience needs an ending. This is the deepest of the four, an opposition of goal rather than
+of method, so ask what the product is actually for before applying either.
+
+**Scarcity and urgency.** Loss aversion is real and scarcity cues do convert; manufactured
+scarcity is a dark pattern. The distinction is whether the constraint exists independently of
+the interface. "Two rooms left" is either a fact or a lie, and the psychological mechanism is
+identical either way, which makes the check factual rather than aesthetic.
+
+**Defaults.** The pre-selected option captures most of the choices, which makes defaults the
+strongest lever available and the easiest to abuse. The usable test is not a blanket rule: a
+default the user would have chosen with full information is service, and one they would
+reverse the moment they noticed it is extraction.
+
+**Friction, with opposite beneficiaries.** Both traditions say to put friction in the right
+place rather than remove all of it, for opposite reasons: to qualify commercial intent, or to
+protect the person's agency. The tool is identical, so ask who this particular friction
+serves. That question settles most cases on its own.
+
+One asymmetry to know about: this skill carries no usage restriction of its own. If a
+companion skill does, honour it. A boundary set by a source author governs that source's
+material regardless of what else happens to be installed.
+
 ## Attribution and boundaries
 
 Every idea here belongs to the researcher or author who formulated it, and every entry links

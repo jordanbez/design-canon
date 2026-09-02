@@ -159,6 +159,37 @@ def iter_new(candidates: Iterator[tuple[str, str]]) -> list[tuple[str, str]]:
     return new
 
 
+def undiscoverable_entries() -> list[tuple[str, str]]:
+    """Entries whose own source could no longer discover them.
+
+    The skill is its own manifest, so an already-distilled URL that its source's
+    `item_pattern` does not match proves the pattern is too tight - and a pattern
+    that is too tight fails silently, reporting "nothing new" forever. Checking the
+    patterns against the corpus is the only feedback that failure mode ever gives.
+    Returns (url, reason) pairs; empty means every pattern still reaches its content.
+    """
+    by_host: dict[str, list[dict]] = {}
+    for s in load_sources():
+        by_host.setdefault(urlsplit(normalize_url(s["index"])).netloc, []).append(s)
+
+    def reaches(src: dict, url: str, path: str) -> bool:
+        if src.get("discovery") == "single":
+            return url == normalize_url(src["index"])
+        pattern = src.get("item_pattern")
+        return bool(pattern) and re.match(pattern, path + "/") is not None
+
+    bad: list[tuple[str, str]] = []
+    for e in all_entries():
+        parts = urlsplit(e.url_norm)
+        srcs = by_host.get(parts.netloc, [])
+        if not srcs:
+            bad.append((e.url_norm, f"no source in sources.json covers {parts.netloc}"))
+        elif not any(reaches(s, e.url_norm, parts.path) for s in srcs):
+            ids = ", ".join(s["id"] for s in srcs)
+            bad.append((e.url_norm, f"no item_pattern matches ({ids})"))
+    return bad
+
+
 if __name__ == "__main__":
     entries = all_entries()
     lo, hi = coverage_window(entries)
@@ -170,3 +201,9 @@ if __name__ == "__main__":
     print("sources      :")
     for name, n in source_names().items():
         print(f"  {name:<32} {n:>4}")
+
+    broken = undiscoverable_entries()
+    print(f"patterns     : {'OK' if not broken else str(len(broken)) + ' UNREACHABLE'}")
+    for url, why in broken:
+        print(f"  ! {url}\n    {why}")
+    assert not broken, "sources.json patterns no longer reach the distilled corpus"

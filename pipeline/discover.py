@@ -36,6 +36,11 @@ def candidates(source: dict) -> list[tuple[str, str]]:
 
 
 def main() -> int:
+    # Titles carry accents and dashes the Windows console codepage cannot encode,
+    # and an UnicodeEncodeError here would kill a run that already succeeded.
+    for stream in (sys.stdout, sys.stderr):
+        stream.reconfigure(encoding="utf-8", errors="replace")
+
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", action="store_true", help="discover seed sources instead of watch")
     ap.add_argument("--all", action="store_true", help="discover watch + seed sources")

@@ -28,6 +28,12 @@ No entries added. Pipeline and metadata corrections only.
   image's `alt` text and finds all six.
 - **Added** `.gitattributes` pinning the repo to LF. `pipeline/sources.json` had been committed
   as CRLF, turning a three-line change into a 157-line diff.
+- **Demoted the Humane by Design garden from `watch` to `seed`.** Measured, not guessed: its six
+  items run 17 to 50 words, single-sentence seeds well under the 60-110 word bar, and two of
+  them restate essays already distilled from `/articles/`. Left on watch they would have been
+  proposed every week forever, so the run could never report `TOTAL NEW: 0` - the signal that
+  means nothing needs doing. The decision lives in `sources.json` rather than in a skip list,
+  because a state file is the one thing this design forbids.
 - **Fixed the extractor reporting "no date on page" for pages that carry one.** The Humane by
   Design garden prints its dates as text inside a `<timestamp>` element, and the parser only
   read `<time datetime>` and meta tags, in ISO only. Every garden item was staged with a prompt

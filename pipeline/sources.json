@@ -49,13 +49,13 @@
       "id": "humane-by-design-garden",
       "name": "Humane by Design",
       "attribution": "Humane by Design, by Jon Yablonski",
-      "mode": "watch",
+      "mode": "seed",
       "license": "amber",
       "theme": "humane-design",
       "index": "https://humanebydesign.com/garden/",
       "discovery": "html-index",
       "item_pattern": "^/garden/[^/]+/?$",
-      "notes": "Digital garden of in-progress ideas (seeds). Grows more often than /articles/, so it is watched too."
+      "notes": "Digital garden of in-progress ideas. Demoted from watch on 2026-09-02: the six items published are 17 to 50 words each, single-sentence seeds that cannot carry an entry at the 60-110 word bar, and two of them restate essays already distilled from /articles/. Watching it meant the weekly run could never return to TOTAL NEW: 0, which is the signal that there is nothing to do. Still reachable with `discover.py --seed` if the garden ever matures into full pieces."
     },
     {
       "id": "principles-design-articles",

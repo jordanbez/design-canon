@@ -74,10 +74,10 @@ jobs:
             echo '2. In Claude Code, from the repo root:'
             echo
             echo '   > Read every file in `pipeline/staging/prompts/`, produce the finished entry for'
-            echo '   > each following the spec exactly, tell me which `references/<theme>.md` it belongs'
+            echo '   > each following the spec exactly, tell me which `skills/design-canon/references/<theme>.md` it belongs'
             echo '   > in, and wait for my OK before writing anything.'
             echo
-            echo '3. Paste the approved entries into the right `references/<theme>.md`, respecting that'
+            echo '3. Paste the approved entries into the right `skills/design-canon/references/<theme>.md`, respecting'
             echo '   file'"'"'s declared `<!-- order: -->`.'
             echo '4. `python3 pipeline/refresh_meta.py --updated '"$DATE"'`'
             echo '5. Add a `CHANGELOG.md` line, delete `pipeline/staging/`, and merge.'
@@ -86,16 +86,16 @@ jobs:
             echo
             echo '```'
             python -c "
-import json
-r = json.load(open('/tmp/new.json'))
-for s in r['sources']:
-    if s.get('error'):
-        print(f\"! {s['id']}: {s['error']}\"); continue
-    for i in s['new']:
-        print(f\"[{i['license']}] {i['name']} -> references/{i['theme']}.md\")
-        print(f\"    {i['title'][:80]}\")
-        print(f\"    {i['url']}\")
-"
+          import json
+          r = json.load(open('/tmp/new.json'))
+          for s in r['sources']:
+              if s.get('error'):
+                  print(f\"! {s['id']}: {s['error']}\"); continue
+              for i in s['new']:
+                  print(f\"[{i['license']}] {i['name']} -> skills/design-canon/references/{i['theme']}.md\")
+                  print(f\"    {i['title'][:80]}\")
+                  print(f\"    {i['url']}\")
+          "
             echo '```'
           } > /tmp/body.md
 

@@ -28,6 +28,11 @@ No entries added. Pipeline and metadata corrections only.
   image's `alt` text and finds all six.
 - **Added** `.gitattributes` pinning the repo to LF. `pipeline/sources.json` had been committed
   as CRLF, turning a three-line change into a 157-line diff.
+- **Fixed the watch workflow, which had never been able to run.** The Python block embedded in
+  the pull-request step sat at column 0, which ends a YAML block scalar, so the file was
+  invalid. GitHub reports that by failing a run on every push - three emailed failures before
+  it was noticed - and the Monday cron would never have fired. The block is now indented to the
+  `run: |` base, and the paths it prints follow the skill to `skills/design-canon/`.
 - **Separated the skill from the tooling.** `npx skills add` was copying the whole repository
   into every installer's skills directory: 75 KB of maintainer tooling alongside 56 KB of
   actual skill, including `pipeline/prompts/distill.md`, a prompt spec written in the second
